@@ -25,3 +25,4 @@ function resetScore() {
     score = 0;
     localStorage.setItem("score", JSON.stringify(score));
 }
+MicroModal.init();
