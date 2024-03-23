@@ -13,12 +13,18 @@ function submitCard() {
     addCard(front_textarea.value, back_textarea.value);
     front_textarea.value = "";
     back_textarea.value = "";
-    updateCardList();
 }
 
 function addCard(term, answer) {
     flashcards.push({term: term, answer: answer});
     localStorage.setItem(FLASHCARD_KEY, JSON.stringify(flashcards));
+    updateCardList();
+}
+
+function removeCard(fc) {
+    flashcards = flashcards.filter(f => f !== fc);
+    localStorage.setItem(FLASHCARD_KEY, JSON.stringify(flashcards));
+    updateCardList();
 }
 
 function updateCardList() {
@@ -38,9 +44,17 @@ function getFlashcardElement(fc) {
         const innerDiv = document.createElement("div");
         innerDiv.textContent = content
 
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "delete";
+        deleteButton.addEventListener("click", e => {
+            removeCard(fc);
+            e.stopPropagation();
+        });
+        deleteButton.className = "delete-button";
+
         const div = document.createElement("div");
         div.className = className;
-        div.replaceChildren(innerDiv);
+        div.replaceChildren(innerDiv, deleteButton);
 
         return div;
     }
