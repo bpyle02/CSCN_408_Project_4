@@ -11,8 +11,17 @@ function submitCard() {
 var flashcards = [];
 var score = 0;
 
-localStorage.setItem("flashcards", JSON.stringify(flashcards));
-localStorage.setItem("score", JSON.stringify(score));
+const cardWrapper = document.getElementById("cards-root");
+
+function updateCardList() {
+    cardWrapper.children = flashcards.map(fc => {
+        const flashcard_div = new HTMLDivElement();
+        flashcard_div.textContent = fc.term + " " + fc.answer;
+        return flashcard_div;
+    });
+}
+
+flashcards = localStorage.getItem("flashcards") | [];
 
 function addCard(term, answer) {
     tempObj = {"term": term, "answer": answer};
@@ -24,16 +33,9 @@ function addCard(term, answer) {
 }
 
 function increaseScore() {
-    newScore = JSON.parse(localStorage.getItem("score"));
-    newScore++;
-    localStorage.setItem("score", JSON.stringify(newScore));
-}
-
-function getScore() {
-    return JSON.parse(localStorage.getItem("score"));
+    score++;
 }
 
 function resetScore() {
     score = 0;
-    localStorage.setItem("score", JSON.stringify(score));
 }
