@@ -9,6 +9,10 @@ const cardWrapper = document.getElementById("cards-root");
 var flashcards = JSON.parse(localStorage.getItem(FLASHCARD_KEY) ?? "[]");
 var score = 0;
 
+function saveCards() {
+    localStorage.setItem(FLASHCARD_KEY, JSON.stringify(flashcards));
+}
+
 function submitCard() {
     addCard(front_textarea.value, back_textarea.value);
     front_textarea.value = "";
@@ -17,13 +21,13 @@ function submitCard() {
 
 function addCard(term, answer) {
     flashcards.push({term: term, answer: answer});
-    localStorage.setItem(FLASHCARD_KEY, JSON.stringify(flashcards));
+    saveCards();
     updateCardList();
 }
 
 function removeCard(fc) {
     flashcards = flashcards.filter(f => f !== fc);
-    localStorage.setItem(FLASHCARD_KEY, JSON.stringify(flashcards));
+    saveCards();
     updateCardList();
 }
 
@@ -37,6 +41,24 @@ function increaseScore() {
 
 function resetScore() {
     score = 0;
+}
+
+function shuffleCards() {
+    let currentIndex = flashcards.length,  randomIndex;
+      
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+      
+        // And swap it with the current element.
+        [flashcards[currentIndex], flashcards[randomIndex]] = [flashcards[randomIndex], flashcards[currentIndex]];
+    }
+
+    saveCards();
+    updateCardList();
 }
 
 function getFlashcardElement(fc) {

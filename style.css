@@ -24,7 +24,7 @@ html {
     overflow: auto;
 }
 
-#add-card-button {
+#button-box {
     position: absolute;
     bottom: 0;
     left: 0;

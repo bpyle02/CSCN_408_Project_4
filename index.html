@@ -11,9 +11,12 @@
 </head>
 <body>
     <div id="main-content">
-        <div id="cards-root"></div>
+      <div id="cards-root"></div>
     </div>
-    <button id="add-card-button" data-micromodal-trigger="modal-1">Add Notecard</button>
+    <div id="button-box">
+      <button data-micromodal-trigger="modal-1">Add Flashcard</button>
+      <button onclick="shuffleCards()">Shuffle</button>
+    </div>
     <!-- Modal for creating new notecards -->
     <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
