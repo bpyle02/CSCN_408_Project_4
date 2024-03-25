@@ -20,11 +20,16 @@ html {
     height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     perspective: 10cm;
     overflow: auto;
 }
 
-#button-box {
+.hidden {
+    display: none;
+}
+
+.button-box {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -60,13 +65,15 @@ html {
     background-color: white;
 }
 
-.flashcard .front .delete-button {
+.flashcard .back .right-button,
+.flashcard .front .left-button {
     position: absolute;
     bottom: 0;
     left: 0;
 }
 
-.flashcard .back .delete-button {
+.flashcard .back .left-button,
+.flashcard .front .right-button {
     position: absolute;
     bottom: 0;
     right: 0;

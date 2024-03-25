@@ -13,9 +13,13 @@
     <div id="main-content">
       <div id="cards-root"></div>
     </div>
-    <div id="button-box">
+    <div id="main-button-box" class="button-box">
       <button data-micromodal-trigger="modal-1">Add Flashcard</button>
       <button onclick="shuffleCards()">Shuffle</button>
+      <button onclick="startTest()">Start Review</button>
+    </div>
+    <div id="test-button-box" class="button-box hidden">
+      <button onclick="quitTest()">Quit Review</button>
     </div>
     <!-- Modal for creating new notecards -->
     <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">

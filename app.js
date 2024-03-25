@@ -9,6 +9,11 @@ const cardWrapper = document.getElementById("cards-root");
 var flashcards = JSON.parse(localStorage.getItem(FLASHCARD_KEY) ?? "[]");
 var score = 0;
 
+var testing = false;
+var testArray = [];
+var currentlyReviewing = null;
+var keepReviewingArray = [];
+
 function saveCards() {
     localStorage.setItem(FLASHCARD_KEY, JSON.stringify(flashcards));
 }
@@ -49,7 +54,13 @@ function resetScore() {
 }
 
 function shuffleCards() {
-    let currentIndex = flashcards.length,  randomIndex;
+    flashcards = shuffleArray(flashcards);
+    saveCards();
+    updateCardList();
+}
+
+function shuffleArray(array) {
+    let currentIndex = array.length,  randomIndex;
       
     // While there remain elements to shuffle.
     while (currentIndex > 0) {
@@ -59,11 +70,10 @@ function shuffleCards() {
         currentIndex--;
       
         // And swap it with the current element.
-        [flashcards[currentIndex], flashcards[randomIndex]] = [flashcards[randomIndex], flashcards[currentIndex]];
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
 
-    saveCards();
-    updateCardList();
+    return array;
 }
 
 function getFlashcardElement(fc) {
@@ -77,7 +87,7 @@ function getFlashcardElement(fc) {
             removeCard(fc);
             e.stopPropagation();
         });
-        deleteButton.className = "delete-button";
+        deleteButton.className = "right-button";
 
         const div = document.createElement("div");
         div.className = className;
@@ -98,6 +108,97 @@ function getFlashcardElement(fc) {
     });
 
     return flashcard_div;
+}
+
+function getReviewFlashcardElement(fc) {
+    var front;
+    {
+        const innerDiv = document.createElement("div");
+        innerDiv.textContent = fc.term;
+
+        front = document.createElement("div");
+        front.className = "front";
+        front.replaceChildren(innerDiv);
+    }
+
+    var back;
+    {
+        const innerDiv = document.createElement("div");
+        innerDiv.textContent = fc.answer;
+
+        const learnedButton = document.createElement("button");
+        learnedButton.textContent = "Learned";
+        learnedButton.addEventListener("click", e => {
+            endCard(true);
+            e.stopPropagation();
+        });
+        learnedButton.className = "left-button";
+
+        const reviewButton = document.createElement("button");
+        reviewButton.textContent = "Keep Reviewing";
+        reviewButton.addEventListener("click", e => {
+            endCard(false);
+            e.stopPropagation();
+        });
+        reviewButton.className = "right-button";
+
+        back = document.createElement("div");
+        back.className = "back";
+        back.replaceChildren(innerDiv, learnedButton, reviewButton);
+    }
+
+    const flashcard_div = document.createElement("div");
+    flashcard_div.className = "flashcard";
+    flashcard_div.replaceChildren(front, back);
+
+    flashcard_div.addEventListener("click", () => {
+        flashcard_div.classList.toggle("flipped");
+    });
+
+    return flashcard_div;
+}
+
+function startTest() {
+    testArray = shuffleArray([...flashcards]);
+    testing = true;
+    document.getElementById("main-button-box").classList.add("hidden");
+    document.getElementById("test-button-box").classList.remove("hidden");
+
+    loadNextReviewCard();
+}
+
+function loadNextReviewCard() {
+    if (testArray.length == 0) {
+        if (keepReviewingArray.length > 0) {
+            testArray.splice(0, keepReviewingArray.length, ...shuffleArray(keepReviewingArray));
+            keepReviewingArray = [];
+        }
+        else {
+            quitTest();
+            return;
+        }
+    }
+
+    currentlyReviewing = testArray.pop();
+
+    cardWrapper.replaceChildren(getReviewFlashcardElement(currentlyReviewing));
+
+    console.log(testArray, keepReviewingArray, currentlyReviewing)
+}
+
+function endCard(learned) {
+    if (!learned) {
+        keepReviewingArray.push(currentlyReviewing);
+    }
+
+    loadNextReviewCard();
+}
+
+function quitTest() {
+    testing = false;
+    document.getElementById("main-button-box").classList.remove("hidden");
+    document.getElementById("test-button-box").classList.add("hidden");
+    updateCardList();
 }
 
 updateCardList();
