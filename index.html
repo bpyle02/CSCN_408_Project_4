@@ -11,6 +11,7 @@
 </head>
 <body>
     <div id="main-content">
+      <div id="info"></div>
       <div id="cards-root"></div>
     </div>
     <div id="main-button-box" class="button-box">
@@ -27,16 +28,24 @@
           <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
             <header class="modal__header">
               <h2 class="modal__title" id="modal-1-title">
-                Micromodal
+                New Flashcard
               </h2>
               <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
                 <!-- actual content of modal -->
-                <p>Front (Prompt):</p>
-                <textarea id="front" name="front"></textarea>
-                <p>Back (Answer):</p>
-                <textarea id="back" name="back"></textarea>
+                <p>Front:</p>
+                <textarea 
+                  id="front" 
+                  class="textarea_class"
+                  name="front" 
+                  placeholder="Type the question here..."></textarea>
+                <p>Back:</p>
+                <textarea 
+                  id="back" 
+                  class="textarea_class"
+                  name="back"
+                  placeholder="Type the answer here..."></textarea>
             </main>
             <footer class="modal__footer">
               <button class="modal__btn modal__btn-primary" onclick="submitCard();">Continue</button>
