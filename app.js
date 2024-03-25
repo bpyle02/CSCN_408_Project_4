@@ -9,6 +9,8 @@ const cardWrapper = document.getElementById("cards-root");
 var flashcards = JSON.parse(localStorage.getItem(FLASHCARD_KEY) ?? "[]");
 var score = 0;
 
+checkBackground();
+
 function saveCards() {
     localStorage.setItem(FLASHCARD_KEY, JSON.stringify(flashcards));
 }
@@ -23,12 +25,23 @@ function addCard(term, answer) {
     flashcards.push({term: term, answer: answer});
     saveCards();
     updateCardList();
+    checkBackground();
 }
 
 function removeCard(fc) {
     flashcards = flashcards.filter(f => f !== fc);
     saveCards();
     updateCardList();
+    checkBackground();
+}
+
+function checkBackground() {
+    if (flashcards.length == 0) {
+        document.getElementById("info").style.display = 'unset';
+        document.getElementById('info').innerHTML = '<h1>Add a flashcard to start learning!</h1>';
+    } else if (flashcards.length == 1) {
+        document.getElementById("info").style.display = 'none';
+    }
 }
 
 function updateCardList() {
