@@ -35,12 +35,17 @@ function updateCardList() {
     cardWrapper.replaceChildren(...flashcards.map(getFlashcardElement));
 }
 
+function totalCards() {
+    return JSON.parse(localStorage.getItem("flashcards")).length;
+}
+
 function increaseScore() {
     score++;
 }
 
 function resetScore() {
     score = 0;
+    localStorage.setItem("score", JSON.stringify(score));
 }
 
 function shuffleCards() {
@@ -96,3 +101,9 @@ function getFlashcardElement(fc) {
 }
 
 updateCardList();
+
+function getPercentRight() {
+    return totalCards() / getScore();
+}
+
+MicroModal.init();
