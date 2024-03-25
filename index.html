@@ -10,7 +10,13 @@
     <script src="./app.js" defer></script>
 </head>
 <body>
-    <button data-micromodal-trigger="modal-1">Add Notecard</button>
+    <div id="main-content">
+      <div id="cards-root"></div>
+    </div>
+    <div id="button-box">
+      <button data-micromodal-trigger="modal-1">Add Flashcard</button>
+      <button onclick="shuffleCards()">Shuffle</button>
+    </div>
     <!-- Modal for creating new notecards -->
     <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
@@ -22,12 +28,14 @@
               <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
-              <p>
-                Try hitting the <code>tab</code> key and notice how the focus stays within the modal itself. Also, <code>esc</code> to close modal.
-              </p>
+                <!-- actual content of modal -->
+                <p>Front (Prompt):</p>
+                <textarea id="front" name="front"></textarea>
+                <p>Back (Answer):</p>
+                <textarea id="back" name="back"></textarea>
             </main>
             <footer class="modal__footer">
-              <button class="modal__btn modal__btn-primary">Continue</button>
+              <button class="modal__btn modal__btn-primary" onclick="submitCard();">Continue</button>
               <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
             </footer>
           </div>
