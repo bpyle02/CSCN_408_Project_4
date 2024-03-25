@@ -13,6 +13,10 @@ function addCard(term, answer) {
     localStorage.setItem("flashcards", JSON.stringify(flashcards));
 }
 
+function totalCards() {
+    return JSON.parse(localStorage.getItem("flashcards")).length;
+}
+
 function increaseScore() {
     newScore = JSON.parse(localStorage.getItem("score"));
     newScore++;
@@ -26,6 +30,10 @@ function getScore() {
 function resetScore() {
     score = 0;
     localStorage.setItem("score", JSON.stringify(score));
+}
+
+function getPercentRight() {
+    return totalCards() / getScore();
 }
 
 MicroModal.init();
