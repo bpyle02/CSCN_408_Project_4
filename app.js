@@ -14,6 +14,8 @@ var testArray = [];
 var currentlyReviewing = null;
 var keepReviewingArray = [];
 
+var cardsLearned = 0;
+
 checkBackground();
 
 function saveCards() {
@@ -142,8 +144,10 @@ function getReviewFlashcardElement(fc) {
         const learnedButton = document.createElement("button");
         learnedButton.textContent = "Learned";
         learnedButton.addEventListener("click", e => {
+            cardsLearned++;
             endCard(true);
             e.stopPropagation();
+            updateStats();
         });
         learnedButton.className = "left-button";
 
@@ -152,6 +156,7 @@ function getReviewFlashcardElement(fc) {
         reviewButton.addEventListener("click", e => {
             endCard(false);
             e.stopPropagation();
+            updateStats();
         });
         reviewButton.className = "right-button";
 
@@ -172,6 +177,7 @@ function getReviewFlashcardElement(fc) {
 }
 
 function startTest() {
+    updateStats();
     testArray = shuffleArray([...flashcards]);
     testing = true;
     document.getElementById("main-button-box").classList.add("hidden");
@@ -208,6 +214,7 @@ function endCard(learned) {
 }
 
 function quitTest() {
+    hideStats();
     testing = false;
     document.getElementById("main-button-box").classList.remove("hidden");
     document.getElementById("test-button-box").classList.add("hidden");
@@ -218,6 +225,15 @@ updateCardList();
 
 function getPercentRight() {
     return totalCards() / getScore();
+}
+
+function updateStats() {
+    document.getElementById("stats").innerHTML = "<h2>Learned: " + cardsLearned + " | Reviewing: " + (flashcards.length - cardsLearned) + "</h2>";
+}
+
+function hideStats() {
+    cardsLearned = 0;
+    document.getElementById("stats").innerHTML = "";
 }
 
 MicroModal.init();
