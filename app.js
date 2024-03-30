@@ -214,7 +214,9 @@ function endCard(learned) {
 }
 
 function quitTest() {
-    hideStats();
+    setTimeout(() => {
+        hideStats();
+    }, 10);
     testing = false;
     document.getElementById("main-button-box").classList.remove("hidden");
     document.getElementById("test-button-box").classList.add("hidden");
@@ -228,12 +230,13 @@ function getPercentRight() {
 }
 
 function updateStats() {
+    document.getElementById("stats").style.display = null;
     document.getElementById("stats").innerHTML = "<h2>Learned: " + cardsLearned + " | Reviewing: " + (flashcards.length - cardsLearned) + "</h2>";
 }
 
 function hideStats() {
     cardsLearned = 0;
-    document.getElementById("stats").innerHTML = "";
+    document.getElementById("stats").style.display = 'none';
 }
 
 MicroModal.init();
