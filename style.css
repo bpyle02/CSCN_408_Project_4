@@ -9,6 +9,7 @@ html, body {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background: linear-gradient(180deg, #dadedf, #b1c3c8);
 }
 
 html {
@@ -30,6 +31,8 @@ html {
 
 h1 {
     color: #00449e;
+    padding-left: 30%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 h2 {
@@ -70,6 +73,7 @@ button:hover {
     transform-style: preserve-3d;
     transform: rotateY(0deg);
     user-select: none;
+    perspective: 1000px;
 }
 
 .flipped {
@@ -85,6 +89,7 @@ button:hover {
     justify-content: center;
     align-items: center;
     background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /
 }
 
 .flashcard .back .right-button,
